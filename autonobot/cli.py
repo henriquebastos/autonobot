@@ -15,8 +15,6 @@ OWNER = config('OWNER')
 REPO = config('REPO')
 GITHUB_KEY = config('GITHUB_KEY')
 
-message = 'http://welcometothedjango.com.br'
-
 
 github = Github(access_token=GITHUB_KEY, default_url_params=dict(owner=OWNER, repo=REPO))
 
