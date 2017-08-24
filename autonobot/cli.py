@@ -31,9 +31,10 @@ def submit_news(text):
 def newsletter(bot, update):
     #from_user = update.message.reply_to_message.from_user
     #message_id = update.message.reply_to_message.message_id
-    text = update.message.reply_to_message.text
 
-    submit_news(text)
+    if update.message.reply_to_message:
+        text = update.message.reply_to_message.text
+        submit_news(text)
 
 
 def error(bot, update, error):
