@@ -1,5 +1,6 @@
 from tapioca_github import Github
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.message import MessageEntity
 import logging
 from decouple import config
 
@@ -50,11 +51,20 @@ def newsletter(bot, update):
     #message_id = update.message.reply_to_message.message_id
 
     if update.message.reply_to_message:  # post link to GitHub issue
-        text = update.message.reply_to_message.text
+        text = update.message.text_markdown
         submit_news(text)
 
     else:  # post instructions on Telegram
         update.message.reply_text(INSTRUCTIONS)
+
+# Deprecated. Using handler filter.
+#def _has_url(message):
+#    return any(True for entity in message.entities if entity.type == MessageEntity.url)
+
+
+def links(bot, update):
+    text = update.message.text_markdown
+    submit_news(text)
 
 
 def error(bot, update, error):
@@ -72,6 +82,14 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("newsletter", newsletter))
+
+    # on message with link
+    dp.add_handler(
+        MessageHandler(
+            Filters.text & (Filters.entity(MessageEntity.URL) |
+                            Filters.entity(MessageEntity.TEXT_LINK)),
+            links)
+    )
 
     # log all errors
     dp.add_error_handler(error)
