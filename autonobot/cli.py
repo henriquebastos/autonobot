@@ -14,6 +14,23 @@ logger = logging.getLogger(__name__)
 OWNER = config('OWNER')
 REPO = config('REPO')
 GITHUB_KEY = config('GITHUB_KEY')
+INSTRUCTIONS = """Pra quem tá chegando e quer entender o que é /newsletter:
+
+Eu e a Evelin enviamos uma newsletter semanal chamada Curto Circuito com as melhores dicas da galera.
+
+Você pode se inscrever em http://hbn.link/cc-assine
+
+Você pode contribuir manualmente para a próxima edição em http://hbn.link/cc-contribua
+
+Além disso, quando você ver uma mensagem, nesse grupo, com um link massa que merece ir para o CC, você pode:
+
+1) Marcar a mensagem
+2) Fazer reply da mensagem apenas com o texto: /newsletter
+
+Assim o @autonobot vai automagicamente registrar sua sugestão para a próxima edição.
+
+PS: É importante que o comando /newsletter aconteça como REPLY da mensagem contendo o link.
+"""
 
 
 github = Github(access_token=GITHUB_KEY, default_url_params=dict(owner=OWNER, repo=REPO))
@@ -32,9 +49,12 @@ def newsletter(bot, update):
     #from_user = update.message.reply_to_message.from_user
     #message_id = update.message.reply_to_message.message_id
 
-    if update.message.reply_to_message:
+    if update.message.reply_to_message:  # post link to GitHub issue
         text = update.message.reply_to_message.text
         submit_news(text)
+
+    else:  # post instructions on Telegram
+        update.message.reply_text(INSTRUCTIONS)
 
 
 def error(bot, update, error):
