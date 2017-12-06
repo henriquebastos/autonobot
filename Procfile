@@ -1,1 +1,1 @@
-bot: python -m autonobot
+web: python -m autonobot
