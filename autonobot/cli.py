@@ -51,7 +51,7 @@ def newsletter(bot, update):
     #message_id = update.message.reply_to_message.message_id
 
     if update.message.reply_to_message:  # post link to GitHub issue
-        text = update.message.text_markdown
+        text = update.message.reply_to_message.text
         submit_news(text)
 
     else:  # post instructions on Telegram
