@@ -57,10 +57,6 @@ def newsletter(bot, update):
     else:  # post instructions on Telegram
         update.message.reply_text(INSTRUCTIONS)
 
-# Deprecated. Using handler filter.
-#def _has_url(message):
-#    return any(True for entity in message.entities if entity.type == MessageEntity.url)
-
 
 def links(bot, update):
     text = update.message.text_markdown
