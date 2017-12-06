@@ -76,8 +76,8 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
-    # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("newsletter", newsletter))
+    # Deprecated
+    #dp.add_handler(CommandHandler("newsletter", newsletter))
 
     # on message with link
     dp.add_handler(
