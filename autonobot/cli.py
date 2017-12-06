@@ -58,7 +58,7 @@ def main():
 
     # Start the Bot
     updater.start_webhook(listen="0.0.0.0",
-                          port=5000,
+                          port=config('PORT', default='5000', cast=int),
                           url_path=TOKEN)
     updater.bot.set_webhook(config('DOMAIN_URL') + TOKEN)
 
